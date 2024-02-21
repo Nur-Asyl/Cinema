@@ -36,7 +36,7 @@ public class CustomerProfileMenu {
             showUserMenu();
 
             System.out.println("Select option:");
-            System.out.println("1. Choose Movie");
+            System.out.println("1. Tickets");
             System.out.println("2. Edit");
             System.out.println("3. Sign out");
             System.out.println("0. Exit");
@@ -46,7 +46,7 @@ public class CustomerProfileMenu {
                 System.out.print("Enter option (1-3): ");
                 int option = scanner.nextInt();
                 if (option == 1) {
-                    chooseMovieMenu();
+                    TicketMenu();
                 } else if (option == 2) {
                     updateUserMenu();
                 } else if (option == 3) {
@@ -181,15 +181,9 @@ public class CustomerProfileMenu {
         this.userId = userId;
     }
 
-    public void chooseMovieMenu() {
+    public void TicketMenu() {
         try {
-            System.out.println("Available Movies:");
-            System.out.println(movieController.getAllMovies());
-
-            System.out.print("Enter movie id to purchase ticket: ");
-            int movieId = scanner.nextInt();
-
-            ticketController.getTicket(movieId);
+            System.out.println("Your tickets: " + ticketController.getAllTicketsByUserId(userId));
         } catch (InputMismatchException e) {
             System.out.println("Invalid input. Please enter a valid movie ID.");
             scanner.nextLine(); // Consume the invalid input

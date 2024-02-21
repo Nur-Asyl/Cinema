@@ -2,29 +2,31 @@ package MarketPlace.Menu;
 
 import Controllers.MovieController.MovieController;
 import Controllers.UserController.UserController;
-import Entities.Movie;
+import Controllers.TicketController.TicketController;
 import MarketPlace.Menu.ManagementMenu.MovieMenu;
 import MarketPlace.Menu.ManagementMenu.UserMenu;
+import MarketPlace.Menu.ManagementMenu.TicketMenu;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-//import static Repositories.DBProporties.DBPhoneProporties.*;
-
-
 public class AdminMenu {
-    MovieController movieController;
-    UserController userController;
-    Scanner scanner;
-    UserMenu userMenu;
-    MovieMenu movieMenu;
+    private final MovieController movieController;
+    private final UserController userController;
+    private final TicketController ticketController;
+    private final Scanner scanner;
+    private final UserMenu userMenu;
+    private final MovieMenu movieMenu;
+    private final TicketMenu ticketMenu;
 
-    public AdminMenu(UserController userController, MovieController movieController, Scanner scanner) {
-        this.movieController = movieController;
+    public AdminMenu(UserController userController, MovieController movieController, TicketController ticketController, Scanner scanner) {
         this.userController = userController;
+        this.movieController = movieController;
+        this.ticketController = ticketController;
         this.scanner = scanner;
         userMenu = new UserMenu(userController, this.scanner);
         movieMenu = new MovieMenu(movieController, this.scanner);
+        ticketMenu = new TicketMenu(ticketController, this.scanner);
     }
 
     public void start() {
@@ -36,21 +38,28 @@ public class AdminMenu {
             System.out.println("Select option:");
             System.out.println("1. Manage movies");
             System.out.println("2. Manage users");
-            System.out.println("0. back");
+            System.out.println("3. Manage tickets");
+            System.out.println("0. Back");
             System.out.println();
 
             try {
-                System.out.print("Enter option (1-5): ");
+                System.out.print("Enter option (1-3): ");
                 option = scanner.nextInt();
-                if (option == 1) {
-                    movieMenu.start();
-                } else if (option == 2) {
-                    userMenu.start();
-                } else {
-                    break;
+                switch (option) {
+                    case 1:
+                        movieMenu.start();
+                        break;
+                    case 2:
+                        userMenu.start();
+                        break;
+                    case 3:
+                        ticketMenu.start();
+                        break;
+                    default:
+                        return;
                 }
             } catch (InputMismatchException e) {
-                System.out.println(e.getMessage() + ": Input must be integer");
+                System.out.println(e.getMessage() + ": Input must be an integer");
                 scanner.nextLine(); // to ignore incorrect input
             } catch (Exception e) {
                 System.out.println(e.getMessage());

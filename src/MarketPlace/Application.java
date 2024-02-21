@@ -28,7 +28,7 @@ public class Application {
         this.scanner = new Scanner(System.in);
         customerMenu = new CustomerProfileMenu(this.userController, this.movieController, this.ticketController, scanner);
         adminMenu = new AdminMenu(this.userController, this.movieController, scanner);
-        storeMenu = new StoreMenu(this.userController, this.ticketController, scanner);
+        storeMenu = new StoreMenu(this.userController, this.ticketController, scanner, this.movieController);
     }
 
     public void start() {

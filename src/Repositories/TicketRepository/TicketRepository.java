@@ -130,6 +130,45 @@ public class TicketRepository implements ITicketRepository {
     }
 
     @Override
+    public List<Ticket> getTicketByUserId(int id) {
+        Connection con = null;
+        try {
+            con = db.getConnection();
+            String sql = "SELECT " +
+                    DB_TICKET_ID + "," +
+                    DB_TICKET_USER_ID + "," +
+                    DB_TICKET_MOVIE_ID + " FROM " + DB_TICKET_TABLE + " WHERE userid=?";
+            PreparedStatement st = con.prepareStatement(sql);
+
+            st.setInt(1, id);
+
+            ResultSet rs = st.executeQuery();
+
+            List<Ticket> tickets = new LinkedList<>();
+            while(rs.next()) {
+                Ticket ticket = new Ticket(rs.getInt(DB_TICKET_ID),
+                        rs.getInt(DB_TICKET_USER_ID),
+                        rs.getInt(DB_TICKET_MOVIE_ID));
+
+                tickets.add(ticket);
+            }
+
+            return tickets;
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                con.close();
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
+        }
+        return null;
+    }
+
+    @Override
     public Ticket getTicket(int id) {
         Connection con = null;
         try {

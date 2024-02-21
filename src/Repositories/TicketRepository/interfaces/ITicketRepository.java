@@ -6,6 +6,7 @@ import java.util.List;
 
 public interface ITicketRepository {
     public boolean createTicket(Ticket ticket);
+    public List<Ticket> getTicketByUserId(int id);
     public boolean deleteTicket(int id);
     public boolean updateTicketUser(int id, int newUserId);
     public boolean updateTicketMovie(int id, int newMovieId);

@@ -12,8 +12,8 @@ public class TicketController {
         this.ticketRepo = ticketRepo;
     }
 
-    public String createTicket(int userId, int movieId, int seatNumber) {
-        Ticket ticket = new Ticket(userId, movieId, seatNumber);
+    public String createTicket(int userId, int movieId) {
+        Ticket ticket = new Ticket(userId, movieId);
         boolean created = ticketRepo.createTicket(ticket);
         return (created) ? "|------| Ticket created |------|" : "|------| Ticket not created |------|";
     }
@@ -37,7 +37,9 @@ public class TicketController {
         Ticket ticket = ticketRepo.getTicket(id);
         return (ticket != null) ? ticket.toString() : "|------| Ticket not found |------|";
     }
-
+    public List<Ticket> getAllTicketsByUserId(int id) {
+        return ticketRepo.getTicketByUserId(id);
+    }
     public List<Ticket> getAllTickets() {
         return ticketRepo.getAllTickets();
     }
