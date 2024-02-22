@@ -15,6 +15,10 @@ public class Ticket {
         this.movie_id = movie_id;
     }
 
+    public static ITicketBuilder builder() {
+        return new ConcreteTicketBuilder();
+    }
+
     public int getId() {
         return id;
     }

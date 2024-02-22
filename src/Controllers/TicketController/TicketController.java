@@ -1,5 +1,6 @@
 package Controllers.TicketController;
 
+import Entities.ITicketBuilder;
 import Entities.Ticket;
 import Repositories.TicketRepository.interfaces.ITicketRepository;
 
@@ -12,11 +13,14 @@ public class TicketController {
         this.ticketRepo = ticketRepo;
     }
 
-    public String createTicket(int userId, int movieId) {
-        Ticket ticket = new Ticket(userId, movieId);
-        boolean created = ticketRepo.createTicket(ticket);
-        return (created) ? "|------| Ticket created |------|" : "|------| Ticket not created |------|";
+    public boolean createTicket(int userId, int movieId) {
+        ITicketBuilder builder = Ticket.builder();
+        return ticketRepo.createTicket(builder.setUserId(userId)
+                .setMovieId(movieId)
+                .build());
     }
+
+
 
     public String deleteTicket(int id) {
         boolean closed = ticketRepo.deleteTicket(id);

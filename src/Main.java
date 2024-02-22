@@ -3,6 +3,7 @@ import Controllers.TicketController.TicketController;
 import Controllers.UserController.UserController;
 import Data.PostgresDB;
 import Data.interfaces.IDB;
+import Factory.ControllerFactory;
 import MarketPlace.Application;
 import Repositories.MovieRepository.MovieRepository;
 import Repositories.MovieRepository.interfaces.IMovieRepository;
@@ -21,14 +22,12 @@ public class Main {
         db.getConnection();
 
         //Repositories and Controllers
-        IUserRepository userRepo = new UserRepository(db);
-        UserController userController = new UserController(userRepo);
+        ControllerFactory controllerFactory = new ControllerFactory(db);
+        UserController userController = controllerFactory.createUserController();
 
-        IMovieRepository movieRepo = new MovieRepository(db);
-        MovieController movieController = new MovieController(movieRepo);
+        MovieController movieController = controllerFactory.createMovieController();
 
-        ITicketRepository ticketRepo = new TicketRepository(db);
-        TicketController ticketController = new TicketController(ticketRepo);
+        TicketController ticketController = controllerFactory.createTicketController();
 
         // MarketPlace
         Application app = new Application(userController, movieController, ticketController);

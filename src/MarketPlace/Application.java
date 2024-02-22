@@ -27,7 +27,7 @@ public class Application {
         this.ticketController = ticketController;
         this.scanner = new Scanner(System.in);
         customerMenu = new CustomerProfileMenu(this.userController, this.movieController, this.ticketController, scanner);
-        adminMenu = new AdminMenu(this.userController, this.movieController, scanner);
+        adminMenu = new AdminMenu(this.userController, this.movieController, this.ticketController, scanner);
         storeMenu = new StoreMenu(this.userController, this.ticketController, scanner, this.movieController);
     }
 
