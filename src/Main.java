@@ -17,11 +17,9 @@ import java.sql.SQLException;
 public class Main {
     public static void main(String[] args) throws SQLException, ClassNotFoundException {
 
-        //Data base
         IDB db = PostgresDB.getInstance();
         db.getConnection();
 
-        //Repositories and Controllers
         ControllerFactory controllerFactory = new ControllerFactory(db);
         UserController userController = controllerFactory.createUserController();
 
@@ -29,9 +27,8 @@ public class Main {
 
         TicketController ticketController = controllerFactory.createTicketController();
 
-        // MarketPlace
         Application app = new Application(userController, movieController, ticketController);
-        app.start(); // starting Big boy
+        app.start();
 
     }
 }
