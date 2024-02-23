@@ -2,8 +2,8 @@ package Controllers.UserController;
 
 import Entities.Users.User;
 import Repositories.UserRepository.interfaces.IUserRepository;
-import MarketPlace.Application;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class UserController {
@@ -12,13 +12,27 @@ public class UserController {
     public UserController(IUserRepository userRepo) {
         this.userRepo = userRepo;
     }
-
-
     public String createUser(String user_name, String password) {
+        if (user_name.isEmpty()) {
+            return "Username must not be empty!";
+        }
+        if (password.length() < 5) {
+            return "Password should be at least 5 characters long!";
+        }
+
+        boolean usernameExists = userRepo.getAllUsers()
+                .stream()
+                .anyMatch(user -> user.getUserName().equals(user_name));
+
+        if(usernameExists) {
+            return "Username already exists";
+        }
+
         User user = new User(user_name, password);
         boolean created = userRepo.createUser(user);
         return (created) ? "|------| User created |------|" : "|------| User not created |------|";
     }
+
 
     public String deleteUser(int id) {
         boolean deleted = userRepo.deleteUser(id);
@@ -26,11 +40,17 @@ public class UserController {
     }
 
     public String updateUserName(int id, String newValue) {
+        if (newValue.isEmpty()) {
+            return "UserName must not be empty";
+        }
         boolean updated = userRepo.updateUserName(id, newValue);
         return (updated) ? "|------| User updated |------|" : "|------| User not updated |------|";
     }
 
     public String updateUserPassword(int id, String newValue) {
+        if (newValue.length() < 5) {
+            return "Password should be at least 5 characters long!";
+        }
         boolean updated = userRepo.updateUserPassword(id, newValue);
         return (updated) ? "|------| User updated |------|" : "|------| User not updated |------|";
     }
@@ -53,4 +73,5 @@ public class UserController {
         }
         return displayAllUsers;
     }
+
 }

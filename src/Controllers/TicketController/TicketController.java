@@ -47,4 +47,5 @@ public class TicketController {
     public List<Ticket> getAllTickets() {
         return ticketRepo.getAllTickets();
     }
+
 }

@@ -1,16 +1,12 @@
 import Controllers.MovieController.MovieController;
+import Controllers.OrderController.OrderController;
 import Controllers.TicketController.TicketController;
 import Controllers.UserController.UserController;
 import Data.PostgresDB;
 import Data.interfaces.IDB;
+import Entities.Order;
 import Factory.ControllerFactory;
-import MarketPlace.Application;
-import Repositories.MovieRepository.MovieRepository;
-import Repositories.MovieRepository.interfaces.IMovieRepository;
-import Repositories.TicketRepository.TicketRepository;
-import Repositories.TicketRepository.interfaces.ITicketRepository;
-import Repositories.UserRepository.UserRepository;
-import Repositories.UserRepository.interfaces.IUserRepository;
+import Cinema.Application;
 
 import java.sql.SQLException;
 
@@ -27,8 +23,9 @@ public class Main {
 
         TicketController ticketController = controllerFactory.createTicketController();
 
-        Application app = new Application(userController, movieController, ticketController);
-        app.start();
+        OrderController orderController = controllerFactory.createOrderController();
 
+        Application app = new Application(userController, movieController, ticketController, orderController);
+        app.start();
     }
 }

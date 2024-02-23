@@ -39,11 +39,11 @@ public class MovieController {
     }
 
     public String getAllMovies() {
-        StringBuilder displayAllMovies = new StringBuilder();
+        String displayAllMovies = "";
         List<Movie> movies = movieRepo.getAllMovies();
         for (Movie movie : movies) {
-            displayAllMovies.append(movie.toString()).append("\n");
+            displayAllMovies += movie.toString() + "\n";
         }
-        return displayAllMovies.toString();
+        return displayAllMovies;
     }
 }
